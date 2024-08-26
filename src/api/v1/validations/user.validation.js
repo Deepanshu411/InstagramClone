@@ -30,13 +30,13 @@ const dobSchema = Joi.date()
     "any.custom": "User must be at least 13 years old",
     "date.base": "Date of birth should be a valid date",
     "date.less": "Date of birth must be in the past",
-});
+  });
 
 const checkUniqueField = async (field, value, model) => {
-    const existingUser = await model.findOne({ where: { [field]: value } });
-    if (existingUser) {
-        return `This ${field} already exists`;
-    }
+  const existingUser = await model.findOne({ where: { [field]: value } });
+  if (existingUser) {
+    return `This ${field} already exists`;
+  }
 };
 
 // export const validateUser = async (userData) => {
@@ -59,24 +59,22 @@ const checkUniqueField = async (field, value, model) => {
 //     }
 // }
 
-
-
 export const validateUser = async (userData) => {
-    const { username, email, dob } = userData;
+  const { username, email, dob } = userData;
 
-    const { error } = dobSchema.validate(dob);
-    if (error) {
-        console.error("Date of birth validation error:", error);
-        throw new Error(error.details[0].message);
-    }
+  const { error } = dobSchema.validate(dob);
+  if (error) {
+    console.error("Date of birth validation error:", error);
+    throw new Error(error.details[0].message);
+  }
 
-    const validateUsername = await checkUniqueField('username', username, User);
-    if (validateUsername) {
-        throw new Error(validateUsername);
-    }
+  const validateUsername = await checkUniqueField("username", username, User);
+  if (validateUsername) {
+    throw new Error(validateUsername);
+  }
 
-    const validateEmail = await checkUniqueField('email', email, User);
-    if (validateEmail) {
-        throw new Error(validateEmail);
-    }
-}
+  const validateEmail = await checkUniqueField("email", email, User);
+  if (validateEmail) {
+    throw new Error(validateEmail);
+  }
+};

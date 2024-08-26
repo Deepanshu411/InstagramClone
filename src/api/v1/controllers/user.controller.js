@@ -38,4 +38,26 @@ export const getUserByIdController = async (req, res) => {
   }
 };
 
+export const updateUserController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await UserService.findUserById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const updatedUser = await UserService.updateUser({ ...req.body, id });
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
+export const deleteUserController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await UserService.deleteUser(id);
+    res.status(204).json();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

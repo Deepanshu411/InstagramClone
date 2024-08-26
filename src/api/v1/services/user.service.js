@@ -16,7 +16,7 @@ class UserService {
       const user = await User.create(userData);
       return user;
     } catch (error) {
-        console.log("user services")
+      console.log("user services");
       throw error;
     }
   };
@@ -34,6 +34,29 @@ class UserService {
     try {
       const user = await User.scope("withPassword").findOne({
         where: { email },
+      });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  static updateUser = async (user) => {
+    try {
+      const updatedUser = await User.update(user, {
+        where: { id: user.id },
+        returning: true,
+      });
+      return updatedUser;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  static deleteUser = async (id) => {
+    try {
+      const user = await User.destroy({
+        where: { id },
       });
       return user;
     } catch (error) {

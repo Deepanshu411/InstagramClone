@@ -14,9 +14,9 @@ export const sequelize = new Sequelize({
 const syncDatabase = async () => {
   try {
     await sequelize.sync({ force: true }); // Use `force: true` only in development to drop and recreate tables
-    console.log('Database synchronized successfully');
+    console.log("Database synchronized successfully");
   } catch (error) {
-    console.error('Error synchronizing database:', error);
+    console.error("Error synchronizing database:", error);
   }
 };
 
